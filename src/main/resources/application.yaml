@@ -1,1 +1,5 @@
-
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5444/air-travels-api
+    username: postgres
+    password: postgres
