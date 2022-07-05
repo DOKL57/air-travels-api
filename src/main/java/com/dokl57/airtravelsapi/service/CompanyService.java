@@ -38,16 +38,6 @@ public class CompanyService {
         }
     }
 
-    public Company updateCompany(String name) {
-        Optional<Company> existingCompany = companyRepository.findCompanyByName(name);
-        if (existingCompany.isPresent()) {
-            return companyRepository.save(new Company(existingCompany.get().getId(), name));
-        } else {
-            log.error("Company with name {} not found", name);
-            throw new ValidationException("Company with name " + name + " not found");
-        }
-    }
-
     public void deleteCompany(String name) {
         Optional<Company> existingCompany = companyRepository.findCompanyByName(name);
         if (existingCompany.isPresent()) {

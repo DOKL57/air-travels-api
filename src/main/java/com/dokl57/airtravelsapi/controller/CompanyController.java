@@ -1,6 +1,5 @@
 package com.dokl57.airtravelsapi.controller;
 
-import com.dokl57.airtravelsapi.dto.CompanyDto;
 import com.dokl57.airtravelsapi.entity.Company;
 import com.dokl57.airtravelsapi.service.CompanyService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,18 +27,9 @@ public class CompanyController {
        POST /api/companies/create - create new company
      */
     @PostMapping(value = "/create")
-    Company createCompany(@RequestBody @NotNull CompanyDto companyDto) {
-        log.info("Creating company with name {}", companyDto.getName());
-        return companyService.createCompany(companyDto.getName());
-    }
-
-    /*
-       PUT /api/companies/update - update company
-     */
-    @PostMapping(value = "/update")
-    Company updateCompany(@RequestBody @NotNull CompanyDto companyDto) {
-        log.info("Updating company with name {}", companyDto.getName());
-        return companyService.updateCompany(companyDto.getName());
+    Company createCompany(@RequestBody @NotNull String name) {
+        log.info("Creating company with name {}", name);
+        return companyService.createCompany(name);
     }
 
     /*
