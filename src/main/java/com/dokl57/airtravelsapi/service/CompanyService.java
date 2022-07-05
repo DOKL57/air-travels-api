@@ -46,4 +46,14 @@ public class CompanyService {
             throw new ValidationException("Company with name " + company.getName() + " not found");
         }
     }
+
+    public void deleteCompany(String name) {
+        Optional<Company> existingCompany = companyRepository.findCompanyByName(name);
+        if (existingCompany.isPresent()) {
+            companyRepository.delete(existingCompany.get());
+        } else {
+            log.error("Company with name {} not found", name);
+            throw new ValidationException("Company with name " + name + " not found");
+        }
+    }
 }
