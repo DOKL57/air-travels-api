@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -27,23 +28,23 @@ public class CompanyService {
         }
     }
 
-    public Company createCompany(Company company) {
-        Optional<Company> existingCompany = companyRepository.findCompanyByName(company.getName());
+    public Company createCompany(String name) {
+        Optional<Company> existingCompany = companyRepository.findCompanyByName(name);
         if (existingCompany.isPresent()) {
-            log.error("Company with name {} already exists", company.getName());
-            throw new ValidationException("Company with name " + company.getName() + " already exists");
+            log.error("Company with name {} already exists", name);
+            throw new ValidationException("Company with name " + name + " already exists");
         } else {
-            return companyRepository.save(company);
+            return companyRepository.save(new Company(UUID.randomUUID(), name));
         }
     }
 
-    public Company updateCompany(Company company) {
-        Optional<Company> existingCompany = companyRepository.findCompanyByName(company.getName());
+    public Company updateCompany(String name) {
+        Optional<Company> existingCompany = companyRepository.findCompanyByName(name);
         if (existingCompany.isPresent()) {
-            return companyRepository.save(company);
+            return companyRepository.save(new Company(existingCompany.get().getId(), name));
         } else {
-            log.error("Company with name {} not found", company.getName());
-            throw new ValidationException("Company with name " + company.getName() + " not found");
+            log.error("Company with name {} not found", name);
+            throw new ValidationException("Company with name " + name + " not found");
         }
     }
 
@@ -56,4 +57,9 @@ public class CompanyService {
             throw new ValidationException("Company with name " + name + " not found");
         }
     }
+
+    public Iterable<Company> getAllCompanies() {
+        return companyRepository.findAll();
+    }
+
 }
