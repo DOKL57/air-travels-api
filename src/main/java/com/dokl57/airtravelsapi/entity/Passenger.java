@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -36,6 +37,16 @@ public class Passenger {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
     private Set<PassInTrip> passInTrips;
+
+
+    public Passenger(Long randomUUID, String name, String surname, String passportNumber, LocalDate dateOfBirth, String phoneNumber) {
+        this.id = Long.valueOf(randomUUID.toString());
+        this.name = name;
+        this.surname = surname;
+        this.passportNumber = passportNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+    }
 
 
 }
