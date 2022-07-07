@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PassengerDto {
-    private UUID id;
     private String name;
     private String surname;
     @Size(min = 10, max = 15, message = "Number should have at least 10 or less than 15 digits")
