@@ -9,4 +9,5 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
 
     Optional<Passenger> findPassengerByName(String name);
+    Optional<Passenger> findPassengerByPassportNumber(String passportNumber);
 }
