@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -39,14 +41,7 @@ public class Passenger {
     private Set<PassInTrip> passInTrips;
 
 
-    public Passenger(Long randomUUID, String name, String surname, String passportNumber, LocalDate dateOfBirth, String phoneNumber) {
-        this.id = Long.valueOf(randomUUID.toString());
-        this.name = name;
-        this.surname = surname;
-        this.passportNumber = passportNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
+    public List<Trip> getTrips() {
+        return passInTrips.stream().map(PassInTrip::getTrip).collect(Collectors.toList());
     }
-
-
 }
