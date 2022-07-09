@@ -5,10 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -30,6 +27,8 @@ public class Company {
     @ToString.Exclude
     @JsonIgnoreProperties({"company"})
     private Set<Trip> trips = new HashSet<>();
+
+
 
     public Trip addTripToCompany(Trip trip) {
         trips.add(trip);
