@@ -1,9 +1,6 @@
 package com.dokl57.airtravelsapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -12,10 +9,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "pass_in_trip")
+@ToString
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Data
 public class PassInTrip{
 
     @Id
@@ -25,10 +23,12 @@ public class PassInTrip{
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "passenger_id", nullable = false)
+    @ToString.Exclude
     private Passenger passenger;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_id", nullable = false)
+    @ToString.Exclude
     private Trip trip;
 
     @Column(name = "seat_number", nullable = false)

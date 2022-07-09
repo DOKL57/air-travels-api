@@ -1,9 +1,7 @@
 package com.dokl57.airtravelsapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -15,9 +13,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Data
+@NoArgsConstructor
 @ToString
 @Table(name = "passenger")
 public class Passenger {
@@ -42,6 +41,8 @@ public class Passenger {
     private String phoneNumber;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
+    @ToString.Exclude
+    @JsonIgnoreProperties({"passenger"})
     private Set<PassInTrip> passInTrips;
 
 

@@ -1,9 +1,7 @@
 package com.dokl57.airtravelsapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -13,9 +11,10 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @ToString
 @Table(name = "trip")
 public class Trip {
@@ -37,10 +36,13 @@ public class Trip {
     private LocalDateTime timeOut;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trip")
+    @ToString.Exclude
+    @JsonIgnoreProperties({"trip"})
     private Set<PassInTrip> passInTrips;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
+    @ToString.Exclude
     private Company company;
 
 
