@@ -1,26 +1,14 @@
 # air-travels-api
 
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)  
-API for air travels service with Spring boot, Spring data, postgresql.
-
-## Requirements
-
-For building and running the application you need:
-
-- [Docker](https://www.docker.com/)
-
-Or
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [postgresql](https://www.postgresql.org/)
-- [maven](https://maven.apache.org/)
-- [jdk](https://www.oracle.com/java/javase/11/downloads)
+API for air travels service with Spring boot, Spring data, postgresql and flyway.
 
 ## Running the application locally
 
-Use
-
 ```shell
-docker-compose -f docker-compose.yml up -d
+git clone https://github.com/DOKL57/air-travels-api.git
+cd ./air-travels-api
+docker-compose up -d
 ```
 
 
