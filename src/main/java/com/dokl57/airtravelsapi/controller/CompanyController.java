@@ -1,6 +1,9 @@
 package com.dokl57.airtravelsapi.controller;
 
+import com.dokl57.airtravelsapi.dto.CompanyDto;
+import com.dokl57.airtravelsapi.dto.TripDto;
 import com.dokl57.airtravelsapi.entity.Company;
+import com.dokl57.airtravelsapi.entity.Trip;
 import com.dokl57.airtravelsapi.service.CompanyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -27,9 +32,9 @@ public class CompanyController {
        POST /api/companies/create - create new company
      */
     @PostMapping(value = "/create")
-    Company createCompany(@RequestBody @NotNull String name) {
-        log.info("Creating company with name {}", name);
-        return companyService.createCompany(name);
+    Company createCompany(@RequestBody @NotNull CompanyDto companyDto) {
+        log.info("Creating company with name {}", companyDto.getName());
+        return companyService.createCompany(companyDto.getName());
     }
 
     /*
@@ -53,11 +58,27 @@ public class CompanyController {
     /*
     GET api/companies - get all companies
      */
-    @GetMapping(value = "/companies")
-    Iterable<Company> getAllCompanies() {
+    @GetMapping(value = "/")
+    List<Company> getAllCompanies() {
         log.info("Getting all companies");
-        return companyService.getAllCompanies();
+        List<Company> companies= new ArrayList<>();
+        Iterable<Company> allCompanies =  companyService.getAllCompanies();
+        for(Company company: allCompanies){
+            companies.add(company);
+        }
+        return companies;
     }
+
+
+    /*
+       POST api/companies/{name}/addTrip - add trip to company
+     */
+    @PostMapping(value = "/{name}/addTrip")
+    void addTripToCompany(@PathVariable String name, @RequestBody TripDto tripDto) {
+        log.info("Adding trip to company with name {}", name);
+        companyService.addTripToCompany(name, tripDto.getTownFrom(), tripDto.getTownTo(), tripDto.getTimeIn(), tripDto.getTimeOut());
+    }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

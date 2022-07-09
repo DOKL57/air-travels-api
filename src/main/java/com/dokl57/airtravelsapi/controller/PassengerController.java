@@ -1,6 +1,7 @@
 package com.dokl57.airtravelsapi.controller;
 
 import com.dokl57.airtravelsapi.dto.PassengerDto;
+import com.dokl57.airtravelsapi.dto.TripDto;
 import com.dokl57.airtravelsapi.entity.Passenger;
 import com.dokl57.airtravelsapi.entity.Trip;
 import com.dokl57.airtravelsapi.service.PassengerService;
@@ -37,9 +38,9 @@ public class PassengerController {
         DELETE api/passengers/delete/{name} - delete passenger by name
      */
     @DeleteMapping(value = "/delete/{name}")
-    void deletePassenger(@PathVariable String name) {
-        log.info("Deleting passenger with name {}", name);
-        passengerService.deletePassenger(name);
+    void deletePassenger(@PathVariable String passportNumber) {
+        log.info("Deleting passenger with passport number {}", passportNumber);
+        passengerService.deletePassenger(passportNumber);
     }
 
     /*
@@ -61,12 +62,19 @@ public class PassengerController {
     }
 
     /*
-        GET api/passengers/{name}/trips - get all trips of passenger
+        PUT api/passengers/{name}/update - update passenger
      */
-    @GetMapping(value = "/passengers/{passportNumber}/trips")
-    List<Trip> getAllTripsOfPassenger(@PathVariable String passportNumber) {
-        log.info("Getting all trips of passenger with passport number {}", passportNumber);
-        return passengerService.getAllTripsOfPassenger(passportNumber);
+    @PutMapping(value = "/update/{passportNumber}")
+    Passenger updatePassenger(@PathVariable String passportNumber, @RequestBody @NotNull PassengerDto dto) {
+        log.info("Updating passenger with passport number {}", passportNumber);
+        return passengerService.updatePassenger(dto.getName(), dto.getSurname(), dto.getPassportNumber(), dto.getDateOfBirth(), dto.getPhoneNumber());
+    }
+
+    // add passenger to trip
+    @PutMapping(value = "/addToTrip/{passportNumber}")
+    Passenger addPassengerToTrip(@PathVariable String passportNumber, String companyName, String townFrom, String townTo, Integer seatNumber) {
+        log.info("Adding passenger with passport number {} to {}'s company trip from {} to {} with seat number {}", passportNumber , companyName, townFrom, townTo, seatNumber);
+        return passengerService.addPassengerToTrip(passportNumber, companyName, townFrom, townTo, seatNumber);
     }
 
 }
