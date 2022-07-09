@@ -26,10 +26,11 @@ create table "passenger"
 
 create table "pass_in_trip"
 (
+    id         uuid not null primary key,
     trip_id      uuid    not null references trip (id),
     passenger_id uuid    not null references passenger (id),
     seat_number  integer not null,
-    primary key (trip_id, passenger_id)
+    unique (trip_id, passenger_id)
 );
 
 
