@@ -49,7 +49,7 @@ public class CompanyController {
     /*
        GET api/companies/{name} - get company by name
      */
-    @GetMapping(value = "/companies/{name}")
+    @GetMapping(value = "/{name}")
     Company getCompanyByName(@PathVariable String name) {
         log.info("Getting company with name {}", name);
         return companyService.getCompanyByName(name);
