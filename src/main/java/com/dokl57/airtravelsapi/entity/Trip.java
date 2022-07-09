@@ -3,9 +3,12 @@ package com.dokl57.airtravelsapi.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -13,16 +16,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
 @Table(name = "trip")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
 
     @Column(name = "town_from", nullable = false)
     private String townFrom;
@@ -37,6 +37,23 @@ public class Trip {
     private LocalDateTime timeOut;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trip")
-    Set<PassInTrip> passInTrips;
+    private Set<PassInTrip> passInTrips;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Trip trip = (Trip) o;
+        return id != null && Objects.equals(id, trip.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

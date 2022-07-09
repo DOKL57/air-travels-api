@@ -3,10 +3,13 @@ package com.dokl57.airtravelsapi.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString
 @Table(name = "passenger")
 public class Passenger {
     @Id
@@ -43,5 +47,18 @@ public class Passenger {
 
     public List<Trip> getTrips() {
         return passInTrips.stream().map(PassInTrip::getTrip).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Passenger passenger = (Passenger) o;
+        return id != null && Objects.equals(id, passenger.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
