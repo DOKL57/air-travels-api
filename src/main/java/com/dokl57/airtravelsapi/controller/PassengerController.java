@@ -35,9 +35,9 @@ public class PassengerController {
     }
 
     /*
-        DELETE api/passengers/delete/{name} - delete passenger by name
+        DELETE api/passengers/delete/{passportNumber} - delete passenger by name
      */
-    @DeleteMapping(value = "/delete/{name}")
+    @DeleteMapping(value = "/delete/{passportNumber}")
     void deletePassenger(@PathVariable String passportNumber) {
         log.info("Deleting passenger with passport number {}", passportNumber);
         passengerService.deletePassenger(passportNumber);
