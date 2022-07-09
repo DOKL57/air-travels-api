@@ -1,5 +1,6 @@
 package com.dokl57.airtravelsapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @ToString
 @Table(name = "passenger")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,13 +44,7 @@ public class Passenger {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
     @ToString.Exclude
-    @JsonIgnoreProperties({"passenger"})
     private Set<PassInTrip> passInTrips;
-
-
-    public List<Trip> getTrips() {
-        return passInTrips.stream().map(PassInTrip::getTrip).collect(Collectors.toList());
-    }
 
     @Override
     public boolean equals(Object o) {

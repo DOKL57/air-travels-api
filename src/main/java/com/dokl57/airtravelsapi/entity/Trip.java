@@ -1,5 +1,6 @@
 package com.dokl57.airtravelsapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @Table(name = "trip")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,12 +39,12 @@ public class Trip {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trip")
     @ToString.Exclude
-    @JsonIgnoreProperties({"trip"})
     private Set<PassInTrip> passInTrips;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @ToString.Exclude
+    @JsonIgnore
     private Company company;
 
 
