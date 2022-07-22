@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/air-travels-api
+    url: jdbc:postgresql://air-travels-api-db:5432/air-travels-api
     username: postgres
     password: postgres
