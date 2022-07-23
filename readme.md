@@ -17,20 +17,25 @@ docker-compose up -d
 
 ![ERD](/erd.png?raw=true)
 
-You can use [swagger-ui](https://swagger.io/tools/swagger-ui/)
+You can use [swagger-ui](https://swagger.io/tools/swagger-ui/) or [postman](https://www.postman.com/) to test the API.
 
 ```shell
 GET /api/passengers - get list of all passengers
 GET /api/passengers/{passportNumber} - get passenger by passport number
 POST /api/passengers/create - create new passenger
 PUT /api/passengers/update/{passportNumber} - update passenger by passport number
-PUT /api/passengers/addToTrip/{passportNumber} - add passenger with given passport number to trip
 DELETE /api/passengers/delete/{passportNumber} - delete passenger by passport number
 
 GET /api/companies - get list of all companies
 GET /api/companies/{name} - get company by name
 POST /api/companies/create - create new company
-POST /api/companies/{name}/addTrip - add new trip to company with given name
 DELETE /api/companies/delete/{name} - delete company by name
+
+GET /api/trips - get list of all trips
+GET /api/trips/{id} - get trip by id
+POST /api/trips/create - create new trip
+PUT /api/trips/{id}/update - update trip by id
+
+POST /api/registration/new - register a passenger to trip
 ```
 

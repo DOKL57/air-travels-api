@@ -70,11 +70,6 @@ public class PassengerController {
         return passengerService.updatePassenger(dto.getName(), dto.getSurname(), dto.getPassportNumber(), dto.getDateOfBirth(), dto.getPhoneNumber());
     }
 
-    // add passenger to trip
-    @PutMapping(value = "/addToTrip/{passportNumber}")
-    Passenger addPassengerToTrip(@PathVariable String passportNumber, String companyName, String townFrom, String townTo, Integer seatNumber) {
-        log.info("Adding passenger with passport number {} to {}'s company trip from {} to {} with seat number {}", passportNumber , companyName, townFrom, townTo, seatNumber);
-        return passengerService.addPassengerToTrip(passportNumber, companyName, townFrom, townTo, seatNumber);
-    }
+
 
 }

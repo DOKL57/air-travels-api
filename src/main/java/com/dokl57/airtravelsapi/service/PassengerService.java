@@ -19,24 +19,10 @@ import java.util.UUID;
 @Slf4j
 public class PassengerService {
     private final PassengerRepository passengerRepository;
-    private final TripRepository tripRepository;
 
-    private final PassInTripRepository passInTripRepository;
 
-    public PassengerService(PassengerRepository passengerRepository, TripRepository tripRepository, PassInTripRepository passInTripRepository) {
+    public PassengerService(PassengerRepository passengerRepository) {
         this.passengerRepository = passengerRepository;
-        this.tripRepository = tripRepository;
-        this.passInTripRepository = passInTripRepository;
-    }
-
-    public Passenger getPassengerByName(String name) {
-        Optional<Passenger> passenger = passengerRepository.findPassengerByName(name);
-        if (passenger.isPresent()) {
-            return passenger.get();
-        } else {
-            log.error("Passenger with name {} not found", name);
-            throw new ValidationException("Passenger with name " + name + " not found");
-        }
     }
 
     public Passenger createPassenger(String name, String surname, String passportNumber, LocalDate dateOfBirth, String phoneNumber) {
@@ -85,26 +71,5 @@ public class PassengerService {
         }
     }
 
-    // add passenger to trip
-    public Passenger addPassengerToTrip(String passportNumber, String companyName, String townFrom, String townTo, Integer seatNumber) {
-        Optional<Passenger> existingPassenger = passengerRepository.findPassengerByPassportNumber(passportNumber);
-        Optional<Trip> existingTrip = tripRepository.findTripByCompanyNameAndTownFromAndTownTo(companyName, townFrom, townTo);
-        if (existingTrip.isPresent()) {
-            if (existingPassenger.isPresent()) {
-                Optional<PassInTrip> existingPassInTrip = passInTripRepository.findPassInTripByPassengerAndTrip(existingPassenger.get(), existingTrip.get());
-                if(existingPassInTrip.isPresent()) {
-                    log.error("Passenger with passport number {} already exists in trip {}", passportNumber, existingTrip.get().getId());
-                    throw new ValidationException("Passenger with passport number " + passportNumber + " already exists in trip " + existingTrip.get().getId());
-                } else {
-                    existingPassenger.get().getPassInTrips().add(new PassInTrip(UUID.randomUUID(), existingPassenger.get(), existingTrip.get(), seatNumber));
-                    return passengerRepository.save(existingPassenger.get());                }
-            } else {
-                log.error("Passenger with passport number {} not found", passportNumber);
-                throw new ValidationException("Passenger with passport number " + passportNumber + " not found");
-            }
-        } else {
-            log.error("Trip with company name {} and town from {} and town to {} not found", companyName, townFrom, townTo);
-            throw new ValidationException("Trip with company name " + companyName + " and town from " + townFrom + " and town to " + townTo + " not found");
-        }
-    }
+
 }

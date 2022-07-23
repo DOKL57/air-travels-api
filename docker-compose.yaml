@@ -1,43 +1,11 @@
 version: '3'
 services:
-  air-travels-api:
-    image: air-travels-api
-    build:
-      context: .
-    container_name: air-travels-api
-    ports:
-      - "8080:8080"
-    depends_on:
-      - flyway
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://air-travels-api-db:5432/air-travels-api
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-  flyway:
-    image: boxfuse/flyway:5-alpine
-    command: -url=jdbc:postgresql://air-travels-api-db:5432/air-travels-api -schemas=public -user=postgres -password=postgres migrate
-    volumes:
-      - ./migration:/flyway/sql
-    depends_on:
-      - air-travels-api-db
-    environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=air-travels-api
-        - POSTGRES_HOST=postgres
-        - POSTGRES_PORT=5432
-        - POSTGRES_SCHEMA=public
-
-
   air-travels-api-db:
     image: postgres:12
     restart: always
     ports:
-      - "5432:5432"
-    container_name: air-travels-api-db
+      - "5444:5432"
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: air-travels-api
-

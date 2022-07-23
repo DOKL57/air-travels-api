@@ -70,16 +70,6 @@ public class CompanyController {
     }
 
 
-    /*
-       POST api/companies/{name}/addTrip - add trip to company
-     */
-    @PostMapping(value = "/{name}/addTrip")
-    void addTripToCompany(@PathVariable String name, @RequestBody TripDto tripDto) {
-        log.info("Adding trip to company with name {}", name);
-        companyService.addTripToCompany(name, tripDto.getTownFrom(), tripDto.getTownTo(), tripDto.getTimeIn(), tripDto.getTimeOut());
-    }
-
-
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
