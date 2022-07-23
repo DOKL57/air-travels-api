@@ -54,16 +54,7 @@ public class CompanyService {
         }
     }
 
-    public void addTripToCompany(String companyName, String townFrom, String townTo, LocalDateTime timeIn, LocalDateTime timeOut) {
-        Optional<Company> existingCompany = companyRepository.findCompanyByName(companyName);
-        if (existingCompany.isPresent()) {
-            existingCompany.get().addTripToCompany(new Trip(UUID.randomUUID(), townFrom, townTo, timeIn, timeOut, new HashSet<>(), existingCompany.get()));
-            companyRepository.save(existingCompany.get());
-        } else {
-            log.error("Company with name {} not found", companyName);
-            throw new ValidationException("Company with name " + companyName + " not found");
-        }
-    }
+
 
     public Iterable<Company> getAllCompanies() {
         return companyRepository.findAll();
