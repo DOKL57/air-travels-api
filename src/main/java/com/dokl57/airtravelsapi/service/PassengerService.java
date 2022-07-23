@@ -19,14 +19,10 @@ import java.util.UUID;
 @Slf4j
 public class PassengerService {
     private final PassengerRepository passengerRepository;
-    private final TripRepository tripRepository;
 
-    private final PassInTripRepository passInTripRepository;
 
-    public PassengerService(PassengerRepository passengerRepository, TripRepository tripRepository, PassInTripRepository passInTripRepository) {
+    public PassengerService(PassengerRepository passengerRepository) {
         this.passengerRepository = passengerRepository;
-        this.tripRepository = tripRepository;
-        this.passInTripRepository = passInTripRepository;
     }
 
     public Passenger createPassenger(String name, String surname, String passportNumber, LocalDate dateOfBirth, String phoneNumber) {
